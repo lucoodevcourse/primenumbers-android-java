@@ -1,0 +1,170 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/labelTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ToggleButton
+        android:id="@+id/toggleWorker1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/buttonCheck"
+        android:onClick="onWorker1"
+        android:text="@string/label_worker" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/toggleWorker1"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/toggleWorker1" />
+
+    <ToggleButton
+        android:id="@+id/toggleRemote1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/toggleWorker1"
+        android:layout_below="@+id/toggleWorker1"
+        android:onClick="onRemote1"
+        android:text="@string/label_remote" />
+
+    <TextView
+        android:id="@+id/inputUrl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/toggleRemote1"
+        android:layout_alignBottom="@+id/toggleRemote1"
+        android:layout_alignLeft="@+id/progressBar2"
+        android:layout_alignParentRight="true"
+        android:text="@string/label_url1" />
+
+    <ToggleButton
+        android:id="@+id/toggleWorker2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/toggleRemote1"
+        android:layout_below="@+id/toggleRemote1"
+        android:onClick="onWorker2"
+        android:text="@string/label_worker" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/toggleWorker2"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/toggleWorker2" />
+
+    <ToggleButton
+        android:id="@+id/toggleRemote2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/toggleWorker2"
+        android:layout_below="@+id/toggleWorker2"
+        android:onClick="onRemote2"
+        android:text="@string/label_remote" />
+
+    <TextView
+        android:id="@+id/inputUrl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/toggleRemote2"
+        android:layout_alignBottom="@+id/toggleRemote2"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/toggleRemote2"
+        android:text="@string/label_url2" />
+
+    <ToggleButton
+        android:id="@+id/toggleWorker3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/toggleRemote2"
+        android:layout_below="@+id/toggleRemote2"
+        android:onClick="onWorker3"
+        android:text="@string/label_worker" />
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/toggleWorker3"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/toggleWorker3" />
+
+    <ToggleButton
+        android:id="@+id/toggleRemote3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/toggleWorker3"
+        android:layout_below="@+id/toggleWorker3"
+        android:onClick="onRemote2"
+        android:text="@string/label_remote" />
+
+    <TextView
+        android:id="@+id/inputUrl3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/toggleRemote3"
+        android:layout_alignBottom="@+id/toggleRemote3"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/toggleRemote3"
+        android:text="@string/label_url3" />
+
+    <Button
+        android:id="@+id/buttonCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="73dp"
+        android:onClick="onCheck"
+        android:text="@string/label_check" />
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="onCancel"
+        android:text="@string/label_cancel" />
+
+    <TextView
+        android:id="@+id/labelCandidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonCheck"
+        android:layout_alignBottom="@+id/buttonCheck"
+        android:layout_alignParentLeft="true"
+        android:text="@string/label_candidate"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/inputCandidate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/labelCandidate"
+        android:layout_alignBottom="@+id/labelCandidate"
+        android:layout_toLeftOf="@+id/buttonCheck"
+        android:layout_toRightOf="@+id/labelCandidate"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>

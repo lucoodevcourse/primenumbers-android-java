@@ -1,0 +1,16 @@
+<resources>
+
+    <string name="app_name">PrimeChecker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_prime_checker_adapter">PrimeChecker</string>
+    <string name="label_worker">Worker</string>
+    <string name="label_remote">Remote</string>
+    <string name="label_candidate">Candidate:</string>
+    <string name="label_check">Check</string>
+    <string name="label_cancel">Cancel</string>
+    <string name="label_url1">http://laufer-primechecker.herokuapp.com/</string>
+    <string name="label_url2">http://laufer-primechecker2.herokuapp.com/</string>
+    <string name="label_url3">http://pervasive-dev.cs.luc.edu:8081/</string>
+
+</resources>
