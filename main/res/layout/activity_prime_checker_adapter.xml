@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleWorker3"
         android:layout_below="@+id/toggleWorker3"
-        android:onClick="onRemote2"
+        android:onClick="onRemote3"
         android:text="@string/label_remote" />
 
     <TextView

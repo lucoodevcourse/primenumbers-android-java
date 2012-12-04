@@ -50,4 +50,9 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 	protected void onPostExecute(Boolean result) {
 		input.setBackgroundColor(result ? Color.GREEN : Color.RED);
 	}
+
+	@Override
+	protected void onCancelled(Boolean result) {
+		input.setBackgroundColor(Color.WHITE);
+	}
 }

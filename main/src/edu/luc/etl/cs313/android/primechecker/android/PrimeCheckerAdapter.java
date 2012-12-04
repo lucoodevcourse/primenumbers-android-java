@@ -21,9 +21,9 @@ public class PrimeCheckerAdapter extends Activity {
 
 	private final int NUM = 3;
 
-	private final boolean[] workers = new boolean[] { false, false, false };
+	private final boolean[] workers = new boolean[3];
 
-	private final boolean[] remotes = new boolean[] { false, false, false };
+	private final boolean[] remotes = new boolean[3];
 
 	private final ProgressBar[] progressBars = new ProgressBar[NUM];
 

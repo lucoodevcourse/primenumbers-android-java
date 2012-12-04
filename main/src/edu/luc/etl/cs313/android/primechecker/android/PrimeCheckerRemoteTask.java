@@ -6,13 +6,10 @@ import java.net.URL;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
-
-	private static final String TAG = "primechecker-remote-task";
 
 	private ProgressBar progressBar;
 
@@ -61,6 +58,12 @@ public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
 		progressBar.setIndeterminate(false);
 		progressBar.setProgress(100);
 		input.setBackgroundColor(result ? Color.GREEN : Color.RED);
-		Log.i("lkj", "lkj");
+	}
+
+
+	@Override
+	protected void onCancelled(Boolean result) {
+		progressBar.setIndeterminate(false);
+		input.setBackgroundColor(Color.WHITE);
 	}
 }
