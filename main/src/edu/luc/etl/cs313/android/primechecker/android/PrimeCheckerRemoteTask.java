@@ -6,8 +6,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -44,8 +42,7 @@ public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
 		try {
 			final HttpClient client = new DefaultHttpClient();
 		    request = new HttpGet(url.toURI());
-		    final HttpContext context = new BasicHttpContext();
-		    final HttpResponse response = client.execute(request, context);
+		    final HttpResponse response = client.execute(request);
 			System.out.println("hello3");
 		    int status = response.getStatusLine().getStatusCode();
 			System.out.println("hello4");
