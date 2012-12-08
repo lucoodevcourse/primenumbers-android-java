@@ -34,13 +34,13 @@ public class PrimeCheckerAdapter extends Activity {
 	private final List<AsyncTask<URL, Void, Boolean>> remoteTasks = new ArrayList<AsyncTask<URL, Void, Boolean>>(NUM);
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prime_checker_adapter);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.activity_prime_checker_adapter, menu);
         return true;
     }
@@ -60,35 +60,34 @@ public class PrimeCheckerAdapter extends Activity {
     @Override
     public void onDestroy() {
     	super.onDestroy();
+    	onCancel(input);
     }
 
     public void onCheck(final View view) {
-    	localTasks.clear();
-		remoteTasks.clear();
+    	onCancel(view);
     	for (int i = 0; i < NUM; i += 1) {
-			localTasks.add(new PrimeCheckerTask(progressBars[i], input));
-			remoteTasks.add(new PrimeCheckerRemoteTask(progressBars[i], input));
-    	}
-    	for (int i = 0; i < NUM; i += 1) {
+    		progressBars[i].setProgress(0);
     		if (workers[i])
-    			if (remotes[i])
+    			if (remotes[i]) {
     				try {
+        				final PrimeCheckerRemoteTask t = new PrimeCheckerRemoteTask(progressBars[i], input);
+        				remoteTasks.add(t);
     					final URL url = new URL(urls[i].getText().toString() + input.getText().toString());
-    					remoteTasks.get(i).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+    					t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
     				} catch (final MalformedURLException ex) { }
-    			else
-    				localTasks.get(i).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Long.parseLong(input.getText().toString()));
+    			} else {
+    				final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[i], input);
+    				localTasks.add(t);
+    				t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Long.parseLong(input.getText().toString()));
+    			}
     	}
     }
 
     public void onCancel(final View view) {
-    	for (int i = 0; i < NUM; i += 1) {
-    		if (workers[i])
-    			if (remotes[i])
-    				remoteTasks.get(i).cancel(true);
-    			else
-    				localTasks.get(i).cancel(true);
-    	}
+    	for (AsyncTask<?, ?, ?> t: localTasks) { t.cancel(true); }
+    	for (AsyncTask<?, ?, ?> t: remoteTasks) { t.cancel(true); }
+    	localTasks.clear();
+		remoteTasks.clear();
     }
 
     public void onWorker(final int number, final boolean enabled) {

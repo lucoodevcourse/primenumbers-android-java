@@ -1,8 +1,13 @@
 package edu.luc.etl.cs313.android.primechecker.android;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -14,6 +19,8 @@ public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
 	private ProgressBar progressBar;
 
 	private TextView input;
+
+	private HttpGet request;
 
 	public PrimeCheckerRemoteTask(final ProgressBar progressBar, final TextView input) {
 		this.progressBar = progressBar;
@@ -27,7 +34,7 @@ public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
 	}
 
 	@Override
-	protected Boolean doInBackground(URL... params) {
+	protected Boolean doInBackground(final URL... params) {
 		if (params.length != 1)
 			throw new IllegalArgumentException("exactly one argument expected");
 		System.out.println("hello1");
@@ -35,26 +42,29 @@ public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
 		progressBar.setIndeterminate(true);
 		System.out.println("hello2 " + url.toString());
 		try {
-		    final HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+			final HttpClient client = new DefaultHttpClient();
+		    request = new HttpGet(url.toURI());
+		    final HttpContext context = new BasicHttpContext();
+		    final HttpResponse response = client.execute(request, context);
 			System.out.println("hello3");
-		    int response = urlConnection.getResponseCode();
+		    int status = response.getStatusLine().getStatusCode();
 			System.out.println("hello4");
-		    if (response == 200)
+		    if (status == 200)
 		    	return true;
-		    else if (response == 404)
+		    else if (status == 404)
 		    	return false;
 		    else {
 				System.out.println("hello5 " + response);
 		    	throw new RuntimeException("unexpected server response");
 		    }
-		} catch (final IOException ex) {
+		} catch (final Throwable ex) {
 			System.out.println("hello6");
 			throw new RuntimeException(ex);
 		}
 	}
 
 	@Override
-	protected void onPostExecute(Boolean result) {
+	protected void onPostExecute(final Boolean result) {
 		progressBar.setIndeterminate(false);
 		progressBar.setProgress(100);
 		input.setBackgroundColor(result ? Color.GREEN : Color.RED);
@@ -62,8 +72,9 @@ public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
 
 
 	@Override
-	protected void onCancelled(Boolean result) {
+	protected void onCancelled(final Boolean result) {
 		progressBar.setIndeterminate(false);
 		input.setBackgroundColor(Color.WHITE);
+		request.abort();
 	}
 }

@@ -17,7 +17,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/buttonCheck"
         android:onClick="onWorker1"
-        android:text="@string/label_worker" />
+        android:textOff="@string/label_worker"
+        android:textOn="@string/label_worker" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
@@ -36,7 +37,8 @@
         android:layout_alignLeft="@+id/toggleWorker1"
         android:layout_below="@+id/toggleWorker1"
         android:onClick="onRemote1"
-        android:text="@string/label_remote" />
+        android:textOff="@string/label_remote"
+        android:textOn="@string/label_remote" />
 
     <TextView
         android:id="@+id/inputUrl1"
@@ -44,7 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/toggleRemote1"
         android:layout_alignBottom="@+id/toggleRemote1"
-        android:layout_alignLeft="@+id/progressBar2"
         android:layout_alignParentRight="true"
         android:text="@string/label_url1" />
 
@@ -55,7 +56,8 @@
         android:layout_alignLeft="@+id/toggleRemote1"
         android:layout_below="@+id/toggleRemote1"
         android:onClick="onWorker2"
-        android:text="@string/label_worker" />
+        android:textOff="@string/label_worker"
+        android:textOn="@string/label_worker" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -71,10 +73,11 @@
         android:id="@+id/toggleRemote2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/toggleWorker2"
+        android:layout_alignLeft="@+id/toggleWorker2"
         android:layout_below="@+id/toggleWorker2"
         android:onClick="onRemote2"
-        android:text="@string/label_remote" />
+        android:textOff="@string/label_remote"
+        android:textOn="@string/label_remote" />
 
     <TextView
         android:id="@+id/inputUrl2"
@@ -83,7 +86,6 @@
         android:layout_alignBaseline="@+id/toggleRemote2"
         android:layout_alignBottom="@+id/toggleRemote2"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/toggleRemote2"
         android:text="@string/label_url2" />
 
     <ToggleButton
@@ -93,7 +95,8 @@
         android:layout_alignLeft="@+id/toggleRemote2"
         android:layout_below="@+id/toggleRemote2"
         android:onClick="onWorker3"
-        android:text="@string/label_worker" />
+        android:textOff="@string/label_worker"
+        android:textOn="@string/label_worker" />
 
     <ProgressBar
         android:id="@+id/progressBar3"
@@ -112,7 +115,8 @@
         android:layout_alignLeft="@+id/toggleWorker3"
         android:layout_below="@+id/toggleWorker3"
         android:onClick="onRemote3"
-        android:text="@string/label_remote" />
+        android:textOff="@string/label_remote"
+        android:textOn="@string/label_remote" />
 
     <TextView
         android:id="@+id/inputUrl3"
@@ -121,7 +125,6 @@
         android:layout_alignBaseline="@+id/toggleRemote3"
         android:layout_alignBottom="@+id/toggleRemote3"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/toggleRemote3"
         android:text="@string/label_url3" />
 
     <Button
