@@ -43,10 +43,10 @@ The underlying links invoke the corresponding web service on the number.
 
 # TODO
 
-* Testing
 * improve UI
 * improve architecture
 * architectural diagram
 * testing
 * define task in a way that it can be decomposed! 
   (e.g. each task to check divisibility within a specific range)
+* AsyncHttpTask
