@@ -30,7 +30,7 @@ In Android Studio: `Run > Run PrimeNumbers`
 
 The underlying links invoke the corresponding web service on the number.
 
-- [1013](http://laufer-primechecker.herokuapp.com/6007)
+- [1013](http://laufer-primechecker.herokuapp.com/1013)
 - [10007](http://laufer-primechecker.herokuapp.com/10007)
 - [100003](http://laufer-primechecker.herokuapp.com/100003)
 - [1000003](http://laufer-primechecker.herokuapp.com/1000003)
