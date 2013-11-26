@@ -28,12 +28,14 @@ In Android Studio: `Run > Run PrimeNumbers`
 
 ## Sample prime numbers to try
 
-- 1013
-- 10007
-- 100003
-- 1000003
-- 10000169
-- 100000007
+The underlying links invoke the corresponding web service on the number.
+
+- [1013](http://laufer-primechecker.herokuapp.com/6007)
+- [10007](http://laufer-primechecker.herokuapp.com/10007)
+- [100003](http://laufer-primechecker.herokuapp.com/100003)
+- [1000003](http://laufer-primechecker.herokuapp.com/1000003)
+- [10000169](http://laufer-primechecker.herokuapp.com/10000169)
+- [100000007](http://laufer-primechecker.herokuapp.com/100000007)
 
 # References
 
