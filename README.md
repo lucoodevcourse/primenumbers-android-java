@@ -39,6 +39,12 @@ The underlying links invoke the corresponding web service on the number.
 - [10000169](http://laufer-primechecker.herokuapp.com/10000169)
 - [100000007](http://laufer-primechecker.herokuapp.com/100000007)
 
+# A Tale of Two AsyncHttpClients
+
+Do not use [this AsyncHttpClient](http://sonatype.github.io/async-http-client) in Android.
+It will throw the infamous `android.os.NetworkOnMainThreadException` without explicit configuration
+and has a heavyweight dependency on non-Android logging (slf4j).
+
 # References
 
 - [Jason Christensen's OOPSLA 2009 presentation](http://www.slideshare.net/jasonc411/oopsla-2009-combining-rest-and-cloud-a-practitioners-report)
