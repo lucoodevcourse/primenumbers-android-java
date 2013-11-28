@@ -11,6 +11,6 @@
     <string name="label_cancel">Cancel</string>
     <string name="label_url1">http://laufer-primechecker.herokuapp.com/</string>
     <string name="label_url2">http://laufer-primechecker2.herokuapp.com/</string>
-    <string name="label_url3">http://pervasive-dev.cs.luc.edu:8081/</string>
+    <string name="label_url3">http://pervasive-dev.cs.luc.edu:8082/</string>
 
 </resources>

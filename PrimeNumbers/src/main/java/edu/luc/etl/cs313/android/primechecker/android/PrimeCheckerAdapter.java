@@ -1,11 +1,8 @@
 package edu.luc.etl.cs313.android.primechecker.android;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.luc.etl.cs313.android.primechecker.android.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -15,6 +12,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+/**
+ * Simple adapter for prime checker app.
+ */
 public class PrimeCheckerAdapter extends Activity {
 
 	private TextView input;
@@ -31,7 +31,7 @@ public class PrimeCheckerAdapter extends Activity {
 
 	private final List<AsyncTask<Long, Integer, Boolean>> localTasks = new ArrayList<AsyncTask<Long, Integer, Boolean>>(NUM);
 
-	private final List<AsyncTask<URL, Void, Boolean>> remoteTasks = new ArrayList<AsyncTask<URL, Void, Boolean>>(NUM);
+	private final List<PrimeCheckerRemoteTask> remoteTasks = new ArrayList<PrimeCheckerRemoteTask>(NUM);
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -69,23 +69,21 @@ public class PrimeCheckerAdapter extends Activity {
     		progressBars[i].setProgress(0);
     		if (workers[i])
     			if (remotes[i]) {
-    				try {
-        				final PrimeCheckerRemoteTask t = new PrimeCheckerRemoteTask(progressBars[i], input);
-        				remoteTasks.add(t);
-    					final URL url = new URL(urls[i].getText().toString() + input.getText().toString());
-    					t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
-    				} catch (final MalformedURLException ex) { }
+        			final PrimeCheckerRemoteTask t = new PrimeCheckerRemoteTask(progressBars[i], input);
+        			remoteTasks.add(t);
+    				t.start(urls[i].getText().toString() + input.getText().toString());
     			} else {
     				final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[i], input);
     				localTasks.add(t);
+                    // execute this task in the background on a thread pool
     				t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Long.parseLong(input.getText().toString()));
     			}
     	}
     }
 
     public void onCancel(final View view) {
-    	for (AsyncTask<?, ?, ?> t: localTasks) { t.cancel(true); }
-    	for (AsyncTask<?, ?, ?> t: remoteTasks) { t.cancel(true); }
+    	for (final AsyncTask<?, ?, ?> t: localTasks) { t.cancel(true); }
+    	for (final PrimeCheckerRemoteTask t: remoteTasks) { t.cancel(); }
     	localTasks.clear();
 		remoteTasks.clear();
     }

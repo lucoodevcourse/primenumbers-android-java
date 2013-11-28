@@ -1,77 +1,80 @@
 package edu.luc.etl.cs313.android.primechecker.android;
 
-import java.net.URL;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.graphics.Color;
-import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class PrimeCheckerRemoteTask extends AsyncTask<URL, Void, Boolean> {
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 
-	private ProgressBar progressBar;
+import org.apache.http.Header;
 
-	private TextView input;
+/**
+ * Task for remote checking whether a number is prime via the given URL.
+ * Assumes that response status OK means prime, NotFound means composite.
+ */
+public class PrimeCheckerRemoteTask {
 
-	private HttpGet request;
+    private static String TAG = "edu.luc.etl.cs313.android.primechecker.android.PrimeCheckerRemoteTask";
+
+	private final ProgressBar progressBar;
+
+	private final TextView input;
+
+	private RequestHandle request;
 
 	public PrimeCheckerRemoteTask(final ProgressBar progressBar, final TextView input) {
 		this.progressBar = progressBar;
 		this.input = input;
 	}
 
-	@Override
-	protected void onPreExecute() {
-		progressBar.setMax(100);
-		input.setBackgroundColor(Color.YELLOW);
-	}
-
-	@Override
-	protected Boolean doInBackground(final URL... params) {
-		if (params.length != 1)
-			throw new IllegalArgumentException("exactly one argument expected");
-		System.out.println("hello1");
-		URL url = params[0];
-		progressBar.setIndeterminate(true);
-		System.out.println("hello2 " + url.toString());
+	public void start(final String url) {
 		try {
-			final HttpClient client = new DefaultHttpClient();
-		    request = new HttpGet(url.toURI());
-		    final HttpResponse response = client.execute(request);
-			System.out.println("hello3");
-		    int status = response.getStatusLine().getStatusCode();
-			System.out.println("hello4");
-		    if (status == 200)
-		    	return true;
-		    else if (status == 404)
-		    	return false;
-		    else {
-				System.out.println("hello5 " + response);
-		    	throw new RuntimeException("unexpected server response");
-		    }
+            Log.d(TAG, "starting request for URL = " + url);
+            progressBar.setMax(100);
+            progressBar.setIndeterminate(true);
+            input.setBackgroundColor(Color.YELLOW);
+            Log.d(TAG, "creating client");
+			final AsyncHttpClient client = new AsyncHttpClient();
+            Log.d(TAG, "submitting request to " + client);
+            request = client.get(url, new AsyncHttpResponseHandler() {
+                @Override
+                public void onStart() {
+                    Log.d(TAG, "request started");
+                }
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Log.d(TAG, "request handled successfully with status code " + statusCode);
+                    input.setBackgroundColor(statusCode == 200 ? Color.GREEN : Color.MAGENTA);
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Log.d(TAG, "request failed with status code " + statusCode);
+                    input.setBackgroundColor(statusCode == 404 ? Color.RED : Color.MAGENTA);
+                    if (error != null) {
+                        Log.d(TAG, "request failed with error " + error);
+                    }
+                }
+                @Override
+                public void onFinish() {
+                    progressBar.setIndeterminate(false);
+                    progressBar.setProgress(100);
+                }
+            });
+            Log.d(TAG, "submitted request");
 		} catch (final Throwable ex) {
-			System.out.println("hello6");
+            Log.d(TAG, "exception...rethrowing");
 			throw new RuntimeException(ex);
 		}
 	}
 
-	@Override
-	protected void onPostExecute(final Boolean result) {
-		progressBar.setIndeterminate(false);
-		progressBar.setProgress(100);
-		input.setBackgroundColor(result ? Color.GREEN : Color.RED);
-	}
-
-
-	@Override
-	protected void onCancelled(final Boolean result) {
+	protected void cancel() {
+        Log.d(TAG, "canceling request");
 		progressBar.setIndeterminate(false);
 		input.setBackgroundColor(Color.WHITE);
-		request.abort();
+        request.cancel(true);
+        Log.d(TAG, "canceled request");
 	}
 }

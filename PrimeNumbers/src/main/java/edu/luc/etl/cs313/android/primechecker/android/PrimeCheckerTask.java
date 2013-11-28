@@ -5,11 +5,14 @@ import android.os.AsyncTask;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+/**
+ * Local async (background) task for prime number checking.
+ */
 public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 
-	private ProgressBar progressBar;
+	private final ProgressBar progressBar;
 
-	private TextView input;
+	private final TextView input;
 
 	public PrimeCheckerTask(final ProgressBar progressBar, final TextView input) {
 		this.progressBar = progressBar;
