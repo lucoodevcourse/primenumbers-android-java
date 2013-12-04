@@ -64,21 +64,39 @@ public class PrimeCheckerAdapter extends Activity {
     }
 
     public void onCheck(final View view) {
-    	onCancel(view);
-    	for (int i = 0; i < NUM; i += 1) {
-    		progressBars[i].setProgress(0);
-    		if (workers[i])
-    			if (remotes[i]) {
-        			final PrimeCheckerRemoteTask t = new PrimeCheckerRemoteTask(progressBars[i], input);
-        			remoteTasks.add(t);
-    				t.start(urls[i].getText().toString() + input.getText().toString());
-    			} else {
-    				final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[i], input);
-    				localTasks.add(t);
-                    // execute this task in the background on a thread pool
-    				t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Long.parseLong(input.getText().toString()));
-    			}
-    	}
+        try {
+            onCancel(view);
+            final long number = Long.parseLong(input.getText().toString());
+            boolean asyncOrRemote = false;
+            for (int i = 0; i < NUM; i += 1) {
+                progressBars[i].setProgress(0);
+                if (workers[i]) {
+                    asyncOrRemote = true;
+                    if (remotes[i]) {
+                        // offload this task to a cloud-based service
+                        final PrimeCheckerRemoteTask t = new PrimeCheckerRemoteTask(progressBars[i], input);
+                        remoteTasks.add(t);
+                        t.start(urls[i].getText().toString() + input.getText().toString());
+                    } else {
+                        // execute this task in the background on a thread pool
+                        final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[i], input);
+                        localTasks.add(t);
+                        t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, number);
+                    }
+                }
+            }
+            if (! asyncOrRemote) {
+                // execute this task directly in the foreground
+                final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[0], input);
+                localTasks.add(t);
+                t.onPreExecute();
+                final boolean result = t.doInBackground(number);
+                t.onPostExecute(result);
+                localTasks.clear();
+            }
+        } catch (final NumberFormatException ex) {
+            // ignore incorrectly formatted numbers
+        }
     }
 
     public void onCancel(final View view) {

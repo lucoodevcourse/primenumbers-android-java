@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_prime_checker_adapter">PrimeChecker</string>
-    <string name="label_worker">Enabled</string>
+    <string name="label_worker">Async</string>
     <string name="label_remote">Remote</string>
     <string name="label_candidate">Candidate:</string>
     <string name="label_check">Check</string>
