@@ -12,6 +12,7 @@ This is a very rough initial attempt and still needs significant work.
 - Show how CPU-intensive computation can be off-loaded from a mobile app to
   the cloud, by comparison to a mobile device, an unlimited resource for
   computation and storage.
+- synchronous local foreground tasks in Android (running directly in an event listener)
 - asynchronous local background tasks in Android using [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html)
 - asynchronous access of remote resources (usually RESTful web services) in Android using [AsyncHttpClient](http://loopj.com/android-async-http)
 
