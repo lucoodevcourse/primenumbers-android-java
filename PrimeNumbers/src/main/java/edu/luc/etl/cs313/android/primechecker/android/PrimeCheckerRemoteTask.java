@@ -30,7 +30,8 @@ public class PrimeCheckerRemoteTask {
 		this.input = input;
 	}
 
-	public void start(final String url) {
+    // begin-method-remoteStart
+    public void start(final String url) {
 		try {
             Log.d(TAG, "starting request for URL = " + url);
             progressBar.setMax(100);
@@ -69,7 +70,9 @@ public class PrimeCheckerRemoteTask {
 			throw new RuntimeException(ex);
 		}
 	}
+    // end-method-remoteStart
 
+    // begin-method-remoteCancel
 	protected void cancel() {
         Log.d(TAG, "canceling request");
 		progressBar.setIndeterminate(false);
@@ -77,4 +80,5 @@ public class PrimeCheckerRemoteTask {
         request.cancel(true);
         Log.d(TAG, "canceled request");
 	}
+    // end-method-remoteCancel
 }

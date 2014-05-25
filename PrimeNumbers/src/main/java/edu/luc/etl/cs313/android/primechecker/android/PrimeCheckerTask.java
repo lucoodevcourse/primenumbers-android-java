@@ -19,12 +19,7 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 		this.input = input;
 	}
 
-	@Override
-	protected void onPreExecute() {
-		progressBar.setMax(100);
-		input.setBackgroundColor(Color.YELLOW);
-	}
-
+    // begin-method-doInBackground
 	@Override
 	protected Boolean doInBackground(Long... params) {
 		if (params.length != 1)
@@ -43,6 +38,14 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 		}
 		return true;
 	}
+    // end-method-doInBackground
+
+    // begin-methods-asyncTask
+    @Override
+    protected void onPreExecute() {
+        progressBar.setMax(100);
+        input.setBackgroundColor(Color.YELLOW);
+    }
 
 	@Override
 	protected void onProgressUpdate(Integer... values) {
@@ -58,4 +61,5 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 	protected void onCancelled(Boolean result) {
 		input.setBackgroundColor(Color.WHITE);
 	}
+    // end-methods-asyncTask
 }

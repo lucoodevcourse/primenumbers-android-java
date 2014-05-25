@@ -74,25 +74,31 @@ public class PrimeCheckerAdapter extends Activity {
                     asyncOrRemote = true;
                     if (remotes[i]) {
                         // offload this task to a cloud-based service
+                        // begin-fragment-executeRemote
                         final PrimeCheckerRemoteTask t = new PrimeCheckerRemoteTask(progressBars[i], input);
                         remoteTasks.add(t);
                         t.start(urls[i].getText().toString() + input.getText().toString());
+                        // end-fragment-executeRemote
                     } else {
                         // execute this task in the background on a thread pool
+                        // begin-fragment-executeBackground
                         final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[i], input);
                         localTasks.add(t);
                         t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, number);
+                        // end-fragment-executeBackground
                     }
                 }
             }
             if (! asyncOrRemote) {
                 // execute this task directly in the foreground
+                // begin-fragment-executeForeground
                 final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[0], input);
                 localTasks.add(t);
                 t.onPreExecute();
                 final boolean result = t.doInBackground(number);
                 t.onPostExecute(result);
                 localTasks.clear();
+                // end-fragment-executeForeground
             }
         } catch (final NumberFormatException ex) {
             // ignore incorrectly formatted numbers
