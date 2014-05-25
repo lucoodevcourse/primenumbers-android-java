@@ -21,7 +21,7 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 
     // begin-method-doInBackground
 	@Override
-	protected Boolean doInBackground(Long... params) {
+	protected Boolean doInBackground(final Long... params) {
 		if (params.length != 1)
 			throw new IllegalArgumentException("exactly one argument expected");
 		long i = params[0];
@@ -48,17 +48,17 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
     }
 
 	@Override
-	protected void onProgressUpdate(Integer... values) {
+	protected void onProgressUpdate(final Integer... values) {
 		progressBar.setProgress(values[0]);
 	}
 
 	@Override
-	protected void onPostExecute(Boolean result) {
+	protected void onPostExecute(final Boolean result) {
 		input.setBackgroundColor(result ? Color.GREEN : Color.RED);
 	}
 
 	@Override
-	protected void onCancelled(Boolean result) {
+	protected void onCancelled(final Boolean result) {
 		input.setBackgroundColor(Color.WHITE);
 	}
     // end-methods-asyncTask

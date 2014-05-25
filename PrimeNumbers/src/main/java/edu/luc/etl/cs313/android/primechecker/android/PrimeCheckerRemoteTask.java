@@ -46,12 +46,14 @@ public class PrimeCheckerRemoteTask {
                     Log.d(TAG, "request started");
                 }
                 @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                public void onSuccess(final int statusCode, final Header[] headers,
+                                      final byte[] responseBody) {
                     Log.d(TAG, "request handled successfully with status code " + statusCode);
                     input.setBackgroundColor(statusCode == 200 ? Color.GREEN : Color.MAGENTA);
                 }
                 @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                public void onFailure(final int statusCode, final Header[] headers,
+                                      final byte[] responseBody, final Throwable error) {
                     Log.d(TAG, "request failed with status code " + statusCode);
                     input.setBackgroundColor(statusCode == 404 ? Color.RED : Color.MAGENTA);
                     if (error != null) {
