@@ -10,34 +10,34 @@ import android.widget.TextView;
  */
 public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 
-	private final ProgressBar progressBar;
+    private final ProgressBar progressBar;
 
-	private final TextView input;
+    private final TextView input;
 
-	public PrimeCheckerTask(final ProgressBar progressBar, final TextView input) {
-		this.progressBar = progressBar;
-		this.input = input;
-	}
+    public PrimeCheckerTask(final ProgressBar progressBar, final TextView input) {
+        this.progressBar = progressBar;
+        this.input = input;
+    }
 
     // begin-method-doInBackground
-	@Override
-	protected Boolean doInBackground(final Long... params) {
-		if (params.length != 1)
-			throw new IllegalArgumentException("exactly one argument expected");
-		long i = params[0];
-		if (i < 2)
-			return false;
-		long half = i / 2;
-		double dHalf = half;
-		for (long k = 2; k <= half; k += 1) {
-			if (isCancelled()) break;
-			publishProgress((int) ((k / dHalf) * 100));
-			if (i % k == 0) {
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    protected Boolean doInBackground(final Long... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("exactly one argument expected");
+        long i = params[0];
+        if (i < 2)
+            return false;
+        long half = i / 2;
+        double dHalf = half;
+        for (long k = 2; k <= half; k += 1) {
+            if (isCancelled()) break;
+            publishProgress((int) ((k / dHalf) * 100));
+            if (i % k == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
     // end-method-doInBackground
 
     // begin-methods-asyncTask
@@ -47,19 +47,19 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
         input.setBackgroundColor(Color.YELLOW);
     }
 
-	@Override
-	protected void onProgressUpdate(final Integer... values) {
-		progressBar.setProgress(values[0]);
-	}
+    @Override
+    protected void onProgressUpdate(final Integer... values) {
+        progressBar.setProgress(values[0]);
+    }
 
-	@Override
-	protected void onPostExecute(final Boolean result) {
-		input.setBackgroundColor(result ? Color.GREEN : Color.RED);
-	}
+    @Override
+    protected void onPostExecute(final Boolean result) {
+        input.setBackgroundColor(result ? Color.GREEN : Color.RED);
+    }
 
-	@Override
-	protected void onCancelled(final Boolean result) {
-		input.setBackgroundColor(Color.WHITE);
-	}
+    @Override
+    protected void onCancelled(final Boolean result) {
+        input.setBackgroundColor(Color.WHITE);
+    }
     // end-methods-asyncTask
 }

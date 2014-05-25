@@ -1,37 +1,37 @@
 package edu.luc.etl.cs313.android.primechecker.android;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Simple adapter for prime checker app.
  */
 public class PrimeCheckerAdapter extends Activity {
 
-	private TextView input;
+    private TextView input;
 
-	private final int NUM = 3;
+    private final int NUM = 3;
 
-	private final boolean[] workers = new boolean[3];
+    private final boolean[] workers = new boolean[3];
 
-	private final boolean[] remotes = new boolean[3];
+    private final boolean[] remotes = new boolean[3];
 
-	private final ProgressBar[] progressBars = new ProgressBar[NUM];
+    private final ProgressBar[] progressBars = new ProgressBar[NUM];
 
-	private final TextView[] urls = new TextView[NUM];
+    private final TextView[] urls = new TextView[NUM];
 
-	private final List<AsyncTask<Long, Integer, Boolean>> localTasks = new ArrayList<AsyncTask<Long, Integer, Boolean>>(NUM);
+    private final List<AsyncTask<Long, Integer, Boolean>> localTasks = new ArrayList<AsyncTask<Long, Integer, Boolean>>(NUM);
 
-	private final List<PrimeCheckerRemoteTask> remoteTasks = new ArrayList<PrimeCheckerRemoteTask>(NUM);
+    private final List<PrimeCheckerRemoteTask> remoteTasks = new ArrayList<PrimeCheckerRemoteTask>(NUM);
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -47,20 +47,20 @@ public class PrimeCheckerAdapter extends Activity {
 
     @Override
     public void onResume() {
-    	super.onResume();
-    	input = (TextView) findViewById(R.id.inputCandidate);
-    	progressBars[0] = (ProgressBar) findViewById(R.id.progressBar1);
-    	progressBars[1] = (ProgressBar) findViewById(R.id.progressBar2);
-    	progressBars[2] = (ProgressBar) findViewById(R.id.progressBar3);
-    	urls[0] = (TextView) findViewById(R.id.inputUrl1);
-    	urls[1] = (TextView) findViewById(R.id.inputUrl2);
-    	urls[2] = (TextView) findViewById(R.id.inputUrl3);
+        super.onResume();
+        input = (TextView) findViewById(R.id.inputCandidate);
+        progressBars[0] = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBars[1] = (ProgressBar) findViewById(R.id.progressBar2);
+        progressBars[2] = (ProgressBar) findViewById(R.id.progressBar3);
+        urls[0] = (TextView) findViewById(R.id.inputUrl1);
+        urls[1] = (TextView) findViewById(R.id.inputUrl2);
+        urls[2] = (TextView) findViewById(R.id.inputUrl3);
     }
 
     @Override
     public void onDestroy() {
-    	super.onDestroy();
-    	onCancel(input);
+        super.onDestroy();
+        onCancel(input);
     }
 
     public void onCheck(final View view) {
@@ -89,7 +89,7 @@ public class PrimeCheckerAdapter extends Activity {
                     }
                 }
             }
-            if (! asyncOrRemote) {
+            if (!asyncOrRemote) {
                 // execute this task directly in the foreground
                 // begin-fragment-executeForeground
                 final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[0], input);
@@ -106,24 +106,45 @@ public class PrimeCheckerAdapter extends Activity {
     }
 
     public void onCancel(final View view) {
-    	for (final AsyncTask<?, ?, ?> t: localTasks) { t.cancel(true); }
-    	for (final PrimeCheckerRemoteTask t: remoteTasks) { t.cancel(); }
-    	localTasks.clear();
-		remoteTasks.clear();
+        for (final AsyncTask<?, ?, ?> t : localTasks) {
+            t.cancel(true);
+        }
+        for (final PrimeCheckerRemoteTask t : remoteTasks) {
+            t.cancel();
+        }
+        localTasks.clear();
+        remoteTasks.clear();
     }
 
     public void onWorker(final int number, final boolean enabled) {
-    	workers[number] = enabled;
+        workers[number] = enabled;
     }
 
     public void onRemote(final int number, final boolean enabled) {
-    	remotes[number] = enabled;
+        remotes[number] = enabled;
     }
 
-    public void onWorker1(final View view) { onWorker(0, ((ToggleButton) view).isChecked()); }
-    public void onWorker2(final View view) { onWorker(1, ((ToggleButton) view).isChecked()); }
-    public void onWorker3(final View view) { onWorker(2, ((ToggleButton) view).isChecked()); }
-    public void onRemote1(final View view) { onRemote(0, ((ToggleButton) view).isChecked()); }
-    public void onRemote2(final View view) { onRemote(1, ((ToggleButton) view).isChecked()); }
-    public void onRemote3(final View view) { onRemote(2, ((ToggleButton) view).isChecked()); }
+    public void onWorker1(final View view) {
+        onWorker(0, ((ToggleButton) view).isChecked());
+    }
+
+    public void onWorker2(final View view) {
+        onWorker(1, ((ToggleButton) view).isChecked());
+    }
+
+    public void onWorker3(final View view) {
+        onWorker(2, ((ToggleButton) view).isChecked());
+    }
+
+    public void onRemote1(final View view) {
+        onRemote(0, ((ToggleButton) view).isChecked());
+    }
+
+    public void onRemote2(final View view) {
+        onRemote(1, ((ToggleButton) view).isChecked());
+    }
+
+    public void onRemote3(final View view) {
+        onRemote(2, ((ToggleButton) view).isChecked());
+    }
 }
