@@ -8,6 +8,7 @@ import android.widget.TextView;
 /**
  * Local async (background) task for prime number checking.
  */
+// begin-fragment-PrimeCheckerTaskSETUP
 public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 
     private final ProgressBar progressBar;
@@ -18,17 +19,14 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
         this.progressBar = progressBar;
         this.input = input;
     }
+// end-fragment-PrimeCheckerTaskSETUP
 
-    // begin-method-doInBackground
-    @Override
-    protected Boolean doInBackground(final Long... params) {
-        if (params.length != 1)
-            throw new IllegalArgumentException("exactly one argument expected");
-        long i = params[0];
+    // begin-method-isPrime
+    protected boolean isPrime(final long i) {
         if (i < 2)
             return false;
-        long half = i / 2;
-        double dHalf = half;
+        final long half = i / 2;
+        final double dHalf = half;
         for (long k = 2; k <= half; k += 1) {
             if (isCancelled()) break;
             publishProgress((int) ((k / dHalf) * 100));
@@ -38,27 +36,29 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
         }
         return true;
     }
-    // end-method-doInBackground
+    // end-method-isPrime
 
     // begin-methods-asyncTask
-    @Override
-    protected void onPreExecute() {
+    @Override protected void onPreExecute() {
         progressBar.setMax(100);
         input.setBackgroundColor(Color.YELLOW);
     }
 
-    @Override
-    protected void onProgressUpdate(final Integer... values) {
+    @Override protected Boolean doInBackground(final Long... params) {
+        if (params.length != 1)
+            throw new IllegalArgumentException("exactly one argument expected");
+        return isPrime(params[0]);
+    }
+
+    @Override protected void onProgressUpdate(final Integer... values) {
         progressBar.setProgress(values[0]);
     }
 
-    @Override
-    protected void onPostExecute(final Boolean result) {
+    @Override protected void onPostExecute(final Boolean result) {
         input.setBackgroundColor(result ? Color.GREEN : Color.RED);
     }
 
-    @Override
-    protected void onCancelled(final Boolean result) {
+    @Override protected void onCancelled(final Boolean result) {
         input.setBackgroundColor(Color.WHITE);
     }
     // end-methods-asyncTask
