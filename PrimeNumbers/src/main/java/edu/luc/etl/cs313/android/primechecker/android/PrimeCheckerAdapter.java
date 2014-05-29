@@ -75,7 +75,8 @@ public class PrimeCheckerAdapter extends Activity {
                     if (remotes[i]) {
                         // offload this task to a cloud-based service
                         // begin-fragment-executeRemote
-                        final PrimeCheckerRemoteTask t = new PrimeCheckerRemoteTask(progressBars[i], input);
+                        final PrimeCheckerRemoteTask t =
+                                new PrimeCheckerRemoteTask(progressBars[i], input);
                         remoteTasks.add(t);
                         t.start(urls[i].getText().toString() + input.getText().toString());
                         // end-fragment-executeRemote
@@ -95,7 +96,7 @@ public class PrimeCheckerAdapter extends Activity {
                 final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[0], input);
                 localTasks.add(t);
                 t.onPreExecute();
-                final boolean result = t.doInBackground(number);
+                final boolean result = t.isPrime(number);
                 t.onPostExecute(result);
                 localTasks.clear();
                 // end-fragment-executeForeground
