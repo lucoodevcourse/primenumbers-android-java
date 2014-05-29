@@ -83,7 +83,8 @@ public class PrimeCheckerAdapter extends Activity {
                     } else {
                         // execute this task in the background on a thread pool
                         // begin-fragment-executeBackground
-                        final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[i], input);
+                        final PrimeCheckerTask t =
+                                new PrimeCheckerTask(progressBars[i], input);
                         localTasks.add(t);
                         t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, number);
                         // end-fragment-executeBackground
