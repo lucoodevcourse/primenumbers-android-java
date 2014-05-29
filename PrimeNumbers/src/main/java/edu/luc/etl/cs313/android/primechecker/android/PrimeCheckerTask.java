@@ -25,11 +25,9 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
     protected boolean isPrime(final long i) {
         if (i < 2) return false;
         final long half = i / 2;
-        final double dHalf = half;
         for (long k = 2; k <= half; k += 1) {
-            if (isCancelled()) break;
-            publishProgress((int) ((k / dHalf) * 100));
-            if (i % k == 0) return false;
+            if (isCancelled() || i % k == 0) return false;
+            publishProgress((int) (k * 100 / half));
         }
         return true;
     }
