@@ -27,7 +27,7 @@ with the required line
 
 # Running the Application
 
-In Android Studio: `Run > Run PrimeNumbers`
+In Android Studio: `Run > Run app`
 
 ## Sample prime numbers to try
 
@@ -49,12 +49,3 @@ and has an unnecessary dependency on non-Android logging (slf4j).
 # References
 
 - [Jason Christensen's OOPSLA 2009 presentation](http://www.slideshare.net/jasonc411/oopsla-2009-combining-rest-and-cloud-a-practitioners-report)
-
-# TODO
-
-* improve UI
-* improve architecture
-* architectural diagram
-* testing
-* define task in a way that it can be decomposed! 
-  (e.g. each task to check divisibility within a specific range)
