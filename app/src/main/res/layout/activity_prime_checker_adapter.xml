@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ToggleButton
         android:id="@+id/toggleWorker1"
@@ -17,12 +17,14 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/buttonCheck"
         android:onClick="onWorker1"
-        android:textOff="@string/label_worker"
-        android:textOn="@string/label_worker" />
+        android:textOff="@string/label_worker_off"
+        android:textOn="@string/label_worker_on"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:minHeight="10.dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -37,8 +39,9 @@
         android:layout_alignLeft="@+id/toggleWorker1"
         android:layout_below="@+id/toggleWorker1"
         android:onClick="onRemote1"
-        android:textOff="@string/label_remote"
-        android:textOn="@string/label_remote" />
+        android:textOff="@string/label_remote_off"
+        android:textOn="@string/label_remote_on"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/inputUrl1"
@@ -56,12 +59,14 @@
         android:layout_alignLeft="@+id/toggleRemote1"
         android:layout_below="@+id/toggleRemote1"
         android:onClick="onWorker2"
-        android:textOff="@string/label_worker"
-        android:textOn="@string/label_worker" />
+        android:textOff="@string/label_worker_off"
+        android:textOn="@string/label_worker_on"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:minHeight="10.dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -76,8 +81,9 @@
         android:layout_alignLeft="@+id/toggleWorker2"
         android:layout_below="@+id/toggleWorker2"
         android:onClick="onRemote2"
-        android:textOff="@string/label_remote"
-        android:textOn="@string/label_remote" />
+        android:textOff="@string/label_remote_off"
+        android:textOn="@string/label_remote_on"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/inputUrl2"
@@ -95,12 +101,14 @@
         android:layout_alignLeft="@+id/toggleRemote2"
         android:layout_below="@+id/toggleRemote2"
         android:onClick="onWorker3"
-        android:textOff="@string/label_worker"
-        android:textOn="@string/label_worker" />
+        android:textOff="@string/label_worker_off"
+        android:textOn="@string/label_worker_on"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ProgressBar
         android:id="@+id/progressBar3"
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:minHeight="10.dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -115,8 +123,9 @@
         android:layout_alignLeft="@+id/toggleWorker3"
         android:layout_below="@+id/toggleWorker3"
         android:onClick="onRemote3"
-        android:textOff="@string/label_remote"
-        android:textOn="@string/label_remote" />
+        android:textOff="@string/label_remote_off"
+        android:textOn="@string/label_remote_on"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/inputUrl3"
@@ -154,7 +163,7 @@
         android:layout_alignBottom="@+id/buttonCheck"
         android:layout_alignParentLeft="true"
         android:text="@string/label_candidate"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/inputCandidate"

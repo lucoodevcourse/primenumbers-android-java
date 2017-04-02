@@ -22,7 +22,20 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 // end-fragment-PrimeCheckerTaskSETUP
 
     // begin-method-isPrime
-    protected boolean isPrime(final long i) {
+    protected boolean isPrime(final long i) { // optimized non-Async/local isPrime method
+        if (i < 2) return false;
+        if (i == 2) return true;
+        final long sqrt = (long) Math.sqrt(i);
+        for (long k = 3; k <= sqrt; k += 2) {
+            if (isCancelled() || i % k == 0) return false;
+            publishProgress((int) (k * 100 / sqrt));
+        }
+        return true;
+    }
+    // end-method-isPrime
+
+    // begin-method-isPrimeLong
+    protected boolean isPrimeLong(final long i) { // original isPrime, now used for Async execution
         if (i < 2) return false;
         final long half = i / 2;
         for (long k = 2; k <= half; k += 1) {
@@ -31,7 +44,7 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
         }
         return true;
     }
-    // end-method-isPrime
+    // end-method-isPrimeLong
 
     // begin-methods-asyncTask
     @Override protected void onPreExecute() {
@@ -42,7 +55,7 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
     @Override protected Boolean doInBackground(final Long... params) {
         if (params.length != 1)
             throw new IllegalArgumentException("exactly one argument expected");
-        return isPrime(params[0]);
+        return isPrimeLong(params[0]); // Async execution
     }
 
     @Override protected void onProgressUpdate(final Integer... values) {
@@ -55,6 +68,7 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
 
     @Override protected void onCancelled(final Boolean result) {
         input.setBackgroundColor(Color.WHITE);
+        progressBar.setProgress(0);
     }
     // end-methods-asyncTask
 }

@@ -1,6 +1,7 @@
 package edu.luc.etl.cs313.android.primechecker.android;
 
 import android.app.Activity;
+import android.graphics.Color; // added for Color.WHITE to reset candidate background color
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,7 +24,11 @@ public class PrimeCheckerAdapter extends Activity {
 
     private final boolean[] workers = new boolean[3];
 
+    private final ToggleButton[] workerToggles = new ToggleButton[3]; // added to show status
+
     private final boolean[] remotes = new boolean[3];
+
+    private final ToggleButton[] remoteToggles = new ToggleButton[3]; // added to show status
 
     private final ProgressBar[] progressBars = new ProgressBar[NUM];
 
@@ -49,6 +54,12 @@ public class PrimeCheckerAdapter extends Activity {
     public void onResume() {
         super.onResume();
         input = (TextView) findViewById(R.id.inputCandidate);
+        workerToggles[0] = (ToggleButton) findViewById(R.id.toggleWorker1); // all toggles added to
+        workerToggles[1] = (ToggleButton) findViewById(R.id.toggleWorker2); // show On/Off status
+        workerToggles[2] = (ToggleButton) findViewById(R.id.toggleWorker3);
+        remoteToggles[0] = (ToggleButton) findViewById(R.id.toggleRemote1);
+        remoteToggles[1] = (ToggleButton) findViewById(R.id.toggleRemote2);
+        remoteToggles[2] = (ToggleButton) findViewById(R.id.toggleRemote3);
         progressBars[0] = (ProgressBar) findViewById(R.id.progressBar1);
         progressBars[1] = (ProgressBar) findViewById(R.id.progressBar2);
         progressBars[2] = (ProgressBar) findViewById(R.id.progressBar3);
@@ -65,12 +76,12 @@ public class PrimeCheckerAdapter extends Activity {
 
     public void onCheck(final View view) {
         try {
-            onCancel(view);
+            onCancelHelper();
             final long number = Long.parseLong(input.getText().toString());
             boolean asyncOrRemote = false;
             for (int i = 0; i < NUM; i += 1) {
                 progressBars[i].setProgress(0);
-                if (workers[i]) {
+                if (workers[i] || remotes[i]) { // added || remotes[i] to correct the if condition
                     asyncOrRemote = true;
                     if (remotes[i]) {
                         // offload this task to a cloud-based service
@@ -97,7 +108,7 @@ public class PrimeCheckerAdapter extends Activity {
                 final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[0], input);
                 localTasks.add(t);
                 t.onPreExecute();
-                final boolean result = t.isPrime(number);
+                final boolean result = t.isPrime(number); // this method is now optimized
                 t.onPostExecute(result);
                 localTasks.clear();
                 // end-fragment-executeForeground
@@ -107,7 +118,7 @@ public class PrimeCheckerAdapter extends Activity {
         }
     }
 
-    public void onCancel(final View view) {
+    private void onCancelHelper() { // added to make this logic reusable and to simplify onCancel
         for (final AsyncTask<?, ?, ?> t : localTasks) {
             t.cancel(true);
         }
@@ -116,19 +127,46 @@ public class PrimeCheckerAdapter extends Activity {
         }
         localTasks.clear();
         remoteTasks.clear();
+        for (ProgressBar pb : progressBars) { // added to reset progress bars
+            pb.setMax(100);
+            pb.setProgress(0);
+        }
+    }
+
+    public void onCancel(final View view) {
+        onCancelHelper(); // added
+        input.setBackgroundColor(Color.WHITE); // if cancelled, background should be white
+        for (int i = 0; i < remotes.length; i++) { // and all toggles should be reset to Off
+            if (remotes[i]) {
+                remoteToggles[i].toggle();
+                remotes[i] = false;
+            }
+            if (workers[i]) {
+                workerToggles[i].toggle();
+                workers[i] = false;
+            }
+        }
     }
 
     public void onWorker(final int number, final boolean enabled) {
         workers[number] = enabled;
+        if (remotes[number]) { // added to turn off corresponding remote
+            remoteToggles[number].toggle();
+            remotes[number] = false;
+        }
     }
 
     public void onRemote(final int number, final boolean enabled) {
         remotes[number] = enabled;
+        if (workers[number]) { // added to turn off corresponding worker
+            workerToggles[number].toggle();
+            workers[number] = false;
+        }
     }
 
     public void onWorker1(final View view) {
         onWorker(0, ((ToggleButton) view).isChecked());
-    }
+        }
 
     public void onWorker2(final View view) {
         onWorker(1, ((ToggleButton) view).isChecked());

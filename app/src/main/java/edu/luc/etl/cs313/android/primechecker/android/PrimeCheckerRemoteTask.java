@@ -49,13 +49,15 @@ public class PrimeCheckerRemoteTask {
                 public void onSuccess(final int statusCode, final Header[] headers,
                                       final byte[] responseBody) {
                     Log.d(TAG, "request handled successfully with status code " + statusCode);
-                    input.setBackgroundColor(statusCode == 200 ? Color.GREEN : Color.MAGENTA);
+                    input.setBackgroundColor(statusCode == 200 ? Color.BLUE : Color.LTGRAY);
+                    // colors changed to distinguish remote from local execution
                 }
                 @Override
                 public void onFailure(final int statusCode, final Header[] headers,
                                       final byte[] responseBody, final Throwable error) {
                     Log.d(TAG, "request failed with status code " + statusCode);
-                    input.setBackgroundColor(statusCode == 404 ? Color.RED : Color.MAGENTA);
+                    input.setBackgroundColor(statusCode == 404 ? Color.RED : Color.LTGRAY);
+                    // colors changed to distinguish remote from local execution
                     if (error != null) {
                         Log.d(TAG, "request failed with error " + error);
                     }
@@ -79,6 +81,7 @@ public class PrimeCheckerRemoteTask {
         Log.d(TAG, "canceling request");
         progressBar.setIndeterminate(false);
         input.setBackgroundColor(Color.WHITE);
+        progressBar.setProgress(0); // added to reset progress bar
         request.cancel(true);
         Log.d(TAG, "canceled request");
     }
