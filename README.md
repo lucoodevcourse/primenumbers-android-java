@@ -16,7 +16,7 @@ This is a very rough initial attempt and still needs significant work.
 - asynchronous local background tasks in Android using [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html)
 - asynchronous access of remote resources (usually RESTful web services) in Android using [AsyncHttpClient](http://loopj.com/android-async-http)
 
-See also the [corresponding web service](https://bitbucket.org/loyolachicagocs_distributed/primenumbers-spray-scala).
+See also the [corresponding web service](https://github.com/LoyolaChicagoCode/primenumbers-spray-scala).
 
 # Setting up the Environment
 
