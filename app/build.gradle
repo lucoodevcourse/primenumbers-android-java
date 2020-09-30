@@ -19,14 +19,21 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // Required when setting minSdkVersion to 20 or lower
+        multiDexEnabled true
     }
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -36,8 +43,9 @@ android {
 }
 
 dependencies {
-    implementation group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
     implementation 'junit:junit:4.13'
     implementation 'com.loopj.android:android-async-http:1.4.9'
     testImplementation 'org.robolectric:robolectric:4.4'
