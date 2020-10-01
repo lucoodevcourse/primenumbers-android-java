@@ -1,23 +1,39 @@
 package edu.luc.etl.cs313.android.primechecker.android;
 
 import android.graphics.Color;
-import android.os.AsyncTask;
+import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.apache.http.concurrent.Cancellable;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Local async (background) task for prime number checking.
  */
 // begin-fragment-PrimeCheckerTaskSETUP
-public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
+public class PrimeCheckerTask implements Runnable, Cancellable {
+
+    // TODO pass handler for main UI thread
+
+    private final long number;
 
     private final ProgressBar progressBar;
 
+    private int progressValue = 0;
+
     private final TextView input;
 
-    public PrimeCheckerTask(final ProgressBar progressBar, final TextView input) {
+    private final Handler mainThreadHandler;
+
+    private final AtomicBoolean cancelationRequested = new AtomicBoolean();
+
+    public PrimeCheckerTask(final long number, final ProgressBar progressBar, final TextView input, Handler mainThreadHandler) {
+        this.number = number;
         this.progressBar = progressBar;
         this.input = input;
+        this.mainThreadHandler = mainThreadHandler;
     }
 // end-fragment-PrimeCheckerTaskSETUP
 
@@ -46,29 +62,42 @@ public class PrimeCheckerTask extends AsyncTask<Long, Integer, Boolean> {
     }
     // end-method-isPrimeLong
 
-    // begin-methods-asyncTask
-    @Override protected void onPreExecute() {
+
+    @Override
+    public boolean cancel() {
+        cancelationRequested.set(true);
+        mainThreadHandler.post(() -> {
+            input.setBackgroundColor(Color.WHITE);
+            progressBar.setProgress(0);
+        });
+        progressValue = 0;
+        return true;
+    }
+
+    protected boolean isCancelled() {
+        return cancelationRequested.get();
+    }
+
+    public void onPreExecute() {
         progressBar.setMax(100);
         input.setBackgroundColor(Color.YELLOW);
     }
 
-    @Override protected Boolean doInBackground(final Long... params) {
-        if (params.length != 1)
-            throw new IllegalArgumentException("exactly one argument expected");
-        return isPrimeLong(params[0]); // Async execution
-    }
-
-    @Override protected void onProgressUpdate(final Integer... values) {
-        progressBar.setProgress(values[0]);
-    }
-
-    @Override protected void onPostExecute(final Boolean result) {
+    public void onPostExecute(final boolean result) {
         input.setBackgroundColor(result ? Color.GREEN : Color.RED);
     }
 
-    @Override protected void onCancelled(final Boolean result) {
-        input.setBackgroundColor(Color.WHITE);
-        progressBar.setProgress(0);
+    @Override
+    public void run() {
+        mainThreadHandler.post(this::onPreExecute);
+        final boolean result = isPrimeLong(number); // Async execution
+        mainThreadHandler.post(() -> onPostExecute(result));
+    }
+
+    protected void publishProgress(final int value) {
+        if (value == progressValue) return;
+        progressValue = value;
+        mainThreadHandler.post(() -> progressBar.setProgress(value));
     }
     // end-methods-asyncTask
 }

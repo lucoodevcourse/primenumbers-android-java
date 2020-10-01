@@ -1,17 +1,22 @@
 package edu.luc.etl.cs313.android.primechecker.android;
 
 import android.app.Activity;
-import android.graphics.Color; // added for Color.WHITE to reset candidate background color
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.core.os.HandlerCompat;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Simple adapter for prime checker app.
@@ -34,9 +39,15 @@ public class PrimeCheckerAdapter extends Activity {
 
     private final TextView[] urls = new TextView[NUM];
 
-    private final List<AsyncTask<Long, Integer, Boolean>> localTasks = new ArrayList<AsyncTask<Long, Integer, Boolean>>(NUM);
+    private final List<PrimeCheckerTask> localTasks = new ArrayList<>(NUM);
 
     private final List<PrimeCheckerRemoteTask> remoteTasks = new ArrayList<PrimeCheckerRemoteTask>(NUM);
+
+    private final ExecutorService executorService =
+            Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+    private final Handler mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
+
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -95,9 +106,9 @@ public class PrimeCheckerAdapter extends Activity {
                         // execute this task in the background on a thread pool
                         // begin-fragment-executeBackground
                         final PrimeCheckerTask t =
-                                new PrimeCheckerTask(progressBars[i], input);
+                                new PrimeCheckerTask(number, progressBars[i], input, mainThreadHandler);
                         localTasks.add(t);
-                        t.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, number);
+                        executorService.submit(t);
                         // end-fragment-executeBackground
                     }
                 }
@@ -105,7 +116,7 @@ public class PrimeCheckerAdapter extends Activity {
             if (!asyncOrRemote) {
                 // execute this task directly in the foreground
                 // begin-fragment-executeForeground
-                final PrimeCheckerTask t = new PrimeCheckerTask(progressBars[0], input);
+                final PrimeCheckerTask t = new PrimeCheckerTask(number, progressBars[0], input, mainThreadHandler);
                 localTasks.add(t);
                 t.onPreExecute();
                 final boolean result = t.isPrime(number); // this method is now optimized
@@ -119,8 +130,8 @@ public class PrimeCheckerAdapter extends Activity {
     }
 
     private void onCancelHelper() { // added to make this logic reusable and to simplify onCancel
-        for (final AsyncTask<?, ?, ?> t : localTasks) {
-            t.cancel(true);
+        for (final PrimeCheckerTask t : localTasks) {
+            t.cancel();
         }
         for (final PrimeCheckerRemoteTask t : remoteTasks) {
             t.cancel();
