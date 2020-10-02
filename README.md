@@ -1,4 +1,4 @@
-1# Background
+# Background
 
 The goal of this example is to demonstrate the tradeoffs found in
 the mobile + cloud architecture, where one has a choice between
