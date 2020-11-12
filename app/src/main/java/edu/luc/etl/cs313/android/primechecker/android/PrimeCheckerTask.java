@@ -41,7 +41,7 @@ public class PrimeCheckerTask implements Runnable, Cancellable {
     protected boolean isPrime(final long i) { // optimized non-Async/local isPrime method
         if (i < 2) return false;
         if (i == 2) return true;
-        final long sqrt = (long) Math.sqrt(i);
+        final long sqrt = Math.round(Math.sqrt(i));
         for (long k = 3; k <= sqrt; k += 2) {
             if (isCancelled() || i % k == 0) return false;
             publishProgress((int) (k * 100 / sqrt));

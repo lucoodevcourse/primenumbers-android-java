@@ -64,19 +64,19 @@ public class PrimeCheckerAdapter extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        input = (TextView) findViewById(R.id.inputCandidate);
-        workerToggles[0] = (ToggleButton) findViewById(R.id.toggleWorker1); // all toggles added to
-        workerToggles[1] = (ToggleButton) findViewById(R.id.toggleWorker2); // show On/Off status
-        workerToggles[2] = (ToggleButton) findViewById(R.id.toggleWorker3);
-        remoteToggles[0] = (ToggleButton) findViewById(R.id.toggleRemote1);
-        remoteToggles[1] = (ToggleButton) findViewById(R.id.toggleRemote2);
-        remoteToggles[2] = (ToggleButton) findViewById(R.id.toggleRemote3);
-        progressBars[0] = (ProgressBar) findViewById(R.id.progressBar1);
-        progressBars[1] = (ProgressBar) findViewById(R.id.progressBar2);
-        progressBars[2] = (ProgressBar) findViewById(R.id.progressBar3);
-        urls[0] = (TextView) findViewById(R.id.inputUrl1);
-        urls[1] = (TextView) findViewById(R.id.inputUrl2);
-        urls[2] = (TextView) findViewById(R.id.inputUrl3);
+        input = findViewById(R.id.inputCandidate);
+        workerToggles[0] = findViewById(R.id.toggleWorker1); // all toggles added to
+        workerToggles[1] = findViewById(R.id.toggleWorker2); // show On/Off status
+        workerToggles[2] = findViewById(R.id.toggleWorker3);
+        remoteToggles[0] = findViewById(R.id.toggleRemote1);
+        remoteToggles[1] = findViewById(R.id.toggleRemote2);
+        remoteToggles[2] = findViewById(R.id.toggleRemote3);
+        progressBars[0] = findViewById(R.id.progressBar1);
+        progressBars[1] = findViewById(R.id.progressBar2);
+        progressBars[2] = findViewById(R.id.progressBar3);
+        urls[0] = findViewById(R.id.inputUrl1);
+        urls[1] = findViewById(R.id.inputUrl2);
+        urls[2] = findViewById(R.id.inputUrl3);
     }
 
     @Override
