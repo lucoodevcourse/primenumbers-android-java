@@ -28,11 +28,7 @@ public class PrimeCheckerAdapter extends Activity {
 
     private final int NUM = 3;
 
-    private final boolean[] workers = new boolean[NUM];
-
     private final ToggleButton[] workerToggles = new ToggleButton[NUM]; // added to show status
-
-    private final boolean[] remotes = new boolean[NUM];
 
     private final ToggleButton[] remoteToggles = new ToggleButton[NUM]; // added to show status
 
@@ -93,9 +89,9 @@ public class PrimeCheckerAdapter extends Activity {
             boolean asyncOrRemote = false;
             for (int i = 0; i < NUM; i += 1) {
                 progressBars[i].setProgress(0);
-                if (workers[i] || remotes[i]) { // added || remotes[i] to correct the if condition
+                if (workerToggles[i].isChecked() || remoteToggles[i].isChecked()) { // added || remotes[i] to correct the if condition
                     asyncOrRemote = true;
-                    if (remotes[i]) {
+                    if (remoteToggles[i].isChecked()) {
                         // offload this task to a cloud-based service
                         // begin-fragment-executeRemote
                         final PrimeCheckerRemoteTask t =
@@ -148,33 +144,19 @@ public class PrimeCheckerAdapter extends Activity {
     public void onCancel(final View view) {
         onCancelHelper(); // added
         input.setBackgroundColor(Color.WHITE); // if cancelled, background should be white
-        for (int i = 0; i < remotes.length; i++) { // and all toggles should be reset to Off
-            if (remotes[i]) {
-                remoteToggles[i].toggle();
-                remotes[i] = false;
-            }
-            if (workers[i]) {
-                workerToggles[i].toggle();
-                workers[i] = false;
-            }
+        for (int i = 0; i < remoteToggles.length; i++) { // and all toggles should be reset to Off
+            workerToggles[i].setChecked(false);
+            remoteToggles[i].setChecked(false);
         }
     }
 
     public void onWorker(final View view) {
         final int number = Arrays.asList(workerToggles).indexOf(view);
-        workers[number] = workerToggles[number].isChecked();
-        if (remotes[number]) { // added to turn off corresponding remote
-            remoteToggles[number].toggle();
-            remotes[number] = false;
-        }
+        remoteToggles[number].setChecked(false);
     }
 
     public void onRemote(final View view) {
         final int number = Arrays.asList(remoteToggles).indexOf(view);
-        remotes[number] = remoteToggles[number].isChecked();
-        if (workers[number]) { // added to turn off corresponding worker
-            workerToggles[number].toggle();
-            workers[number] = false;
-        }
+        workerToggles[number].setChecked(false);
     }
 }
