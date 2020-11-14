@@ -11,8 +11,6 @@ import com.loopj.android.http.RequestHandle;
 
 import cz.msebera.android.httpclient.Header;
 
-// import org.apache.httpcomponent.Header;
-
 /**
  * Task for remote checking whether a number is prime via the given URL.
  * Assumes that response status OK means prime, NotFound means composite.

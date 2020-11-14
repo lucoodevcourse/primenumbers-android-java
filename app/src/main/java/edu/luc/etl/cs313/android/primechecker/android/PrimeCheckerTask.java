@@ -29,7 +29,7 @@ public class PrimeCheckerTask implements Runnable, Cancellable {
 
     private final AtomicBoolean cancelationRequested = new AtomicBoolean();
 
-    public PrimeCheckerTask(final long number, final ProgressBar progressBar, final TextView input, Handler mainThreadHandler) {
+    public PrimeCheckerTask(final long number, final ProgressBar progressBar, final TextView input, final Handler mainThreadHandler) {
         this.number = number;
         this.progressBar = progressBar;
         this.input = input;
