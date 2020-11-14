@@ -14,6 +14,7 @@ import android.widget.ToggleButton;
 import androidx.core.os.HandlerCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -159,43 +160,21 @@ public class PrimeCheckerAdapter extends Activity {
         }
     }
 
-    public void onWorker(final int number, final boolean enabled) {
-        workers[number] = enabled;
+    public void onWorker(final View view) {
+        final int number = Arrays.asList(workerToggles).indexOf(view);
+        workers[number] = workerToggles[number].isChecked();
         if (remotes[number]) { // added to turn off corresponding remote
             remoteToggles[number].toggle();
             remotes[number] = false;
         }
     }
 
-    public void onRemote(final int number, final boolean enabled) {
-        remotes[number] = enabled;
+    public void onRemote(final View view) {
+        final int number = Arrays.asList(remoteToggles).indexOf(view);
+        remotes[number] = remoteToggles[number].isChecked();
         if (workers[number]) { // added to turn off corresponding worker
             workerToggles[number].toggle();
             workers[number] = false;
         }
-    }
-
-    public void onWorker1(final View view) {
-        onWorker(0, ((ToggleButton) view).isChecked());
-        }
-
-    public void onWorker2(final View view) {
-        onWorker(1, ((ToggleButton) view).isChecked());
-    }
-
-    public void onWorker3(final View view) {
-        onWorker(2, ((ToggleButton) view).isChecked());
-    }
-
-    public void onRemote1(final View view) {
-        onRemote(0, ((ToggleButton) view).isChecked());
-    }
-
-    public void onRemote2(final View view) {
-        onRemote(1, ((ToggleButton) view).isChecked());
-    }
-
-    public void onRemote3(final View view) {
-        onRemote(2, ((ToggleButton) view).isChecked());
     }
 }

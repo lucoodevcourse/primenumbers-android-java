@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/buttonCheck"
-        android:onClick="onWorker1"
+        android:onClick="onWorker"
         android:textOff="@string/label_worker_off"
         android:textOn="@string/label_worker_on"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleWorker1"
         android:layout_below="@+id/toggleWorker1"
-        android:onClick="onRemote1"
+        android:onClick="onRemote"
         android:textOff="@string/label_remote_off"
         android:textOn="@string/label_remote_on"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleRemote1"
         android:layout_below="@+id/toggleRemote1"
-        android:onClick="onWorker2"
+        android:onClick="onWorker"
         android:textOff="@string/label_worker_off"
         android:textOn="@string/label_worker_on"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleWorker2"
         android:layout_below="@+id/toggleWorker2"
-        android:onClick="onRemote2"
+        android:onClick="onRemote"
         android:textOff="@string/label_remote_off"
         android:textOn="@string/label_remote_on"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleRemote2"
         android:layout_below="@+id/toggleRemote2"
-        android:onClick="onWorker3"
+        android:onClick="onWorker"
         android:textOff="@string/label_worker_off"
         android:textOn="@string/label_worker_on"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -122,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/toggleWorker3"
         android:layout_below="@+id/toggleWorker3"
-        android:onClick="onRemote3"
+        android:onClick="onRemote"
         android:textOff="@string/label_remote_off"
         android:textOn="@string/label_remote_on"
         android:textAppearance="?android:attr/textAppearanceLarge" />
