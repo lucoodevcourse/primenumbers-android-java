@@ -27,13 +27,13 @@ public class PrimeCheckerAdapter extends Activity {
 
     private final int NUM = 3;
 
-    private final boolean[] workers = new boolean[3];
+    private final boolean[] workers = new boolean[NUM];
 
-    private final ToggleButton[] workerToggles = new ToggleButton[3]; // added to show status
+    private final ToggleButton[] workerToggles = new ToggleButton[NUM]; // added to show status
 
-    private final boolean[] remotes = new boolean[3];
+    private final boolean[] remotes = new boolean[NUM];
 
-    private final ToggleButton[] remoteToggles = new ToggleButton[3]; // added to show status
+    private final ToggleButton[] remoteToggles = new ToggleButton[NUM]; // added to show status
 
     private final ProgressBar[] progressBars = new ProgressBar[NUM];
 
