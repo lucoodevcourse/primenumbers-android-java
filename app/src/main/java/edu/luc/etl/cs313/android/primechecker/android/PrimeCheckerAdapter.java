@@ -114,11 +114,9 @@ public class PrimeCheckerAdapter extends Activity {
                 // execute this task directly in the foreground
                 // begin-fragment-executeForeground
                 final PrimeCheckerTask t = new PrimeCheckerTask(number, progressBars[0], input, mainThreadHandler);
-                localTasks.add(t);
                 t.onPreExecute();
-                final boolean result = t.isPrime(number); // this method is now optimized
+                final boolean result = t.isPrimeLong(number); // this method is now optimized
                 t.onPostExecute(result);
-                localTasks.clear();
                 // end-fragment-executeForeground
             }
         } catch (final NumberFormatException ex) {

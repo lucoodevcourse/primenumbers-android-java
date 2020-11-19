@@ -9,6 +9,8 @@ import org.apache.http.concurrent.Cancellable;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import edu.luc.etl.cs313.android.primechecker.util.PrimeCheckerUtil;
+
 /**
  * Local async (background) task for prime number checking.
  */
@@ -37,31 +39,13 @@ public class PrimeCheckerTask implements Runnable, Cancellable {
     }
 // end-fragment-PrimeCheckerTaskSETUP
 
-    // begin-method-isPrime
     protected boolean isPrime(final long i) { // optimized non-Async/local isPrime method
-        if (i < 2) return false;
-        if (i == 2) return true;
-        final long sqrt = Math.round(Math.sqrt(i));
-        for (long k = 3; k <= sqrt; k += 2) {
-            if (isCancelled() || i % k == 0) return false;
-            publishProgress((int) (k * 100 / sqrt));
-        }
-        return true;
+        return PrimeCheckerUtil.isPrimeLocal(i, this::isCancelled, this::publishProgress);
     }
-    // end-method-isPrime
 
-    // begin-method-isPrimeLong
     protected boolean isPrimeLong(final long i) { // original isPrime, now used for Async execution
-        if (i < 2) return false;
-        final long half = i / 2;
-        for (long k = 2; k <= half; k += 1) {
-            if (isCancelled() || i % k == 0) return false;
-            publishProgress((int) (k * 100 / half));
-        }
-        return true;
+        return PrimeCheckerUtil.isPrimeOrig(i, this::isCancelled, this::publishProgress);
     }
-    // end-method-isPrimeLong
-
 
     @Override
     public boolean cancel() {
