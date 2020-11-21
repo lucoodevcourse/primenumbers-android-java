@@ -2,7 +2,7 @@
 
 The goal of this example is to demonstrate the tradeoffs found in
 the mobile + cloud architecture, where one has a choice between
-doing work locally (on the mobile device) versus remotely (in 
+doing work locally (on the mobile device) versus remotely (in
 the cloud) with different performance considerations in each case.
 
 This is a very rough initial attempt and still needs significant work.
@@ -16,7 +16,7 @@ This is a very rough initial attempt and still needs significant work.
 - asynchronous local background tasks in Android using [AsyncTask](http://developer.android.com/reference/android/os/AsyncTask.html)
 - asynchronous access of remote resources (usually RESTful web services) in Android using [AsyncHttpClient](http://loopj.com/android-async-http)
 
-See also the [corresponding web service](https://github.com/LoyolaChicagoCode/primenumbers-spray-scala).
+See also the [corresponding web service](https://github.com/LoyolaChicagoCode/primenumbers-http4s-scala).
 
 # Setting up the Environment
 
