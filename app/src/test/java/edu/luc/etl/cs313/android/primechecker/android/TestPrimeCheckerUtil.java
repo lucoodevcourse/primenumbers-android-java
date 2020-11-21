@@ -1,4 +1,4 @@
-package edu.luc.etl.cs313.android.primechecker.android;
+d ../package edu.luc.etl.cs313.android.primechecker.android;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ public class TestPrimeCheckerUtil {
 
     private final boolean expected;
 
-    @Parameterized.Parameters(name = "Test {index}: isPrimeLocal({0})={1}")
+    @Parameterized.Parameters(name = "Test {index}: isPrime({0})={1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
             { -7, false },
