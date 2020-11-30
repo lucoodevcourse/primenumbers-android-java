@@ -1,4 +1,4 @@
-d ../package edu.luc.etl.cs313.android.primechecker.android;
+package edu.luc.etl.cs313.android.primechecker.android;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
